@@ -1,0 +1,116 @@
+package premierleague.controller;
+
+import premierleague.league.League;
+import premierleague.match.Match;
+
+import java.util.Scanner;
+
+public class GameController {
+
+    private League league;
+    private String userTeamName;
+
+    public GameController() {
+        this.league = new League();
+    }
+
+    public void startSeason() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== Premier League Simulator 25-26 ===");
+        
+        // --- 팀 선택 로직 수정 시작 ---
+        boolean teamSelected = false;
+        while (!teamSelected) {
+            System.out.println("\n팀을 선택하세요 (정확한 이름 입력):");
+            league.printTeamList();
+            System.out.print("입력 >> ");
+
+            userTeamName = sc.nextLine().trim();
+            league.selectUserTeam(userTeamName);
+
+            if (league.getUserTeam() != null) {
+                // 팀 선택 성공
+                teamSelected = true;
+                System.out.println(league.getUserTeam().getName() + " 팀이 선택되었습니다. 시즌을 시작합니다.");
+            } else {
+                // 팀 선택 실패 시 재입력 요청
+                System.out.println("선택한 팀 [" + userTeamName + "]을 찾을 수 없습니다. 목록에서 정확한 팀 이름을 입력해주세요.");
+            }
+        }
+        // --- 팀 선택 로직 수정 끝 ---
+
+
+        league.initializeSeason();
+
+        int targetRound = 0;
+
+        // 38라운드 진행
+        for (int round = 1; round <= 38; round++) {
+            System.out.println("\n\n===== ROUND " + round + " =====");
+
+            Match userMatch = league.getUserMatch(round);
+            if (userMatch != null) {
+                league.simulateUserMatchWithUI(userMatch);
+            } else {
+                System.out.println("이번 라운드에 사용자 팀 경기가 없습니다.");
+            }
+
+            league.simulateOtherMatches(round);
+            league.updateStandings();
+
+            //마지막 라운드면(38 라운드) 메뉴를 띄우지 않고 루프를 빠져나감 -> 바로 엔딩으로
+            if (round == 38) {
+                try { Thread.sleep(1000); } catch (InterruptedException e) {}
+                continue; 
+            }
+
+            // 자동 진행 중이라면 스킵
+            if (round < targetRound) {
+                System.out.println(">> " + targetRound + "라운드까지 고속 진행 중... (현재 " + round + " 완료)");
+                try { Thread.sleep(800); } catch (InterruptedException e) {}
+                continue;
+            }
+            
+            targetRound = 0; 
+
+            // 메뉴 선택 로직
+            boolean nextRound = false;
+            while (!nextRound) {
+                System.out.println("\n[" + round + "라운드 종료] 무엇을 하시겠습니까?");
+                System.out.println("1. 다음 라운드 진행");
+                System.out.println("2. 현재 순위표 출력");
+                System.out.println("3. 특정 라운드까지 자동 진행");
+                System.out.print("선택 >> ");
+
+                try {
+                    String input = sc.nextLine();
+                    int choice = Integer.parseInt(input);
+
+                    if (choice == 1) {
+                        nextRound = true;
+                    } else if (choice == 2) {
+                        league.printStandings();
+                    } else if (choice == 3) {
+                        System.out.print("몇 라운드까지 진행하시겠습니까? (현재: " + round + " / 최대: 38) >> ");
+                        int target = Integer.parseInt(sc.nextLine());
+                        if (target <= round || target > 38) {
+                            System.out.println("잘못된 범위입니다.");
+                        } else {
+                            targetRound = target;
+                            nextRound = true;
+                        }
+                    } else {
+                        System.out.println("잘못된 입력입니다.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("숫자를 입력해주세요.");
+                }
+            }
+        }
+
+        // 시즌 종료 후 최종 결과 출력
+        league.printFinalResult();
+        sc.close();
+    }
+}
