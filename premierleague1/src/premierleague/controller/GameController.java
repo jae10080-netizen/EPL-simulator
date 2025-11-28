@@ -19,26 +19,39 @@ public class GameController {
 
         System.out.println("=== Premier League Simulator 25-26 ===");
         
-        // --- 팀 선택 로직 수정 시작 ---
+        // --- [수정]팀 선택 로직 번호입력 방식 ---
         boolean teamSelected = false;
         while (!teamSelected) {
-            System.out.println("\n팀을 선택하세요 (정확한 이름 입력):");
+            System.out.println("\n플레이할 팀의 번호를 선택하세요:");
             league.printTeamList();
-            System.out.print("입력 >> ");
+            System.out.print("번호입력 >> ");
 
-            userTeamName = sc.nextLine().trim();
-            league.selectUserTeam(userTeamName);
+            try {
+                String input = sc.nextLine();
+                int teamIndex = Integer.parseInt(input);
 
-            if (league.getUserTeam() != null) {
-                // 팀 선택 성공
-                teamSelected = true;
-                System.out.println(league.getUserTeam().getName() + " 팀이 선택되었습니다. 시즌을 시작합니다.");
-            } else {
-                // 팀 선택 실패 시 재입력 요청
-                System.out.println("선택한 팀 [" + userTeamName + "]을 찾을 수 없습니다. 목록에서 정확한 팀 이름을 입력해주세요.");
+                // 유효한 번호인지 확인 (1 ~ 20)
+                // 내부적으로는 0-based index 사용하므로 -1 해줌
+                league.selectUserTeamByIndex(teamIndex - 1);
+
+                if (league.getUserTeam() != null) {
+                    teamSelected = true;
+                    System.out.println("✅ " + league.getUserTeam().getName() + " 팀이 선택되었습니다. 시즌을 시작합니다!");
+                } else {
+                    System.out.println("잘못된 번호입니다. 목록에 있는 번호를 입력해주세요.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("숫자를 입력해주세요.");
             }
         }
         // --- 팀 선택 로직 수정 끝 ---
+        
+     // ★ [추가] 여기서 바로 시작하지 않고 기다림! ★
+        System.out.println("\n준비가 되셨다면 [Enter] 키를 누르세요...");
+        sc.nextLine(); // 사용자가 엔터를 칠 때까지 대기
+
+        System.out.println("⚽ 2025-26 프리미어리그 시즌을 시작합니다! ⚽");
+        try { Thread.sleep(1000); } catch (InterruptedException e) {} // 1초 뜸 들이기
 
 
         league.initializeSeason();

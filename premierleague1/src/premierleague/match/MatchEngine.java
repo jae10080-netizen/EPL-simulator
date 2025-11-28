@@ -27,9 +27,11 @@ public class MatchEngine {
     public void simulateMatchWithUI(Match match) {
         Team home = match.getHomeTeam();
         Team away = match.getAwayTeam();
-
-        int attemptsHome = RandomEngine.getInt(1, 10);
-        int attemptsAway = RandomEngine.getInt(1, 10);
+        
+        
+        //[수정] 찬스 횟수 1~10 -> 2~6
+        int attemptsHome = RandomEngine.getInt(2, 6);
+        int attemptsAway = RandomEngine.getInt(2, 6);
 
         System.out.println("================================");
         System.out.println(home.getName() + " (Home) vs (Away) " + away.getName());
@@ -92,9 +94,10 @@ public class MatchEngine {
     public void simulateSilently(Match match) {
         Team home = match.getHomeTeam();
         Team away = match.getAwayTeam();
-
-        int attemptsHome = RandomEngine.getInt(1, 10);
-        int attemptsAway = RandomEngine.getInt(1, 10);
+        
+        //[수정] 찬수 횟수 하향 위와 동일
+        int attemptsHome = RandomEngine.getInt(2, 6);
+        int attemptsAway = RandomEngine.getInt(2, 6);
 
         int homeGoals = 0;
         int awayGoals = 0;

@@ -42,22 +42,73 @@ public class League {
         teams.add(new Team("에버턴", 73));
         teams.add(new Team("본머스", 72));
         teams.add(new Team("노팅엄 포레스트", 71));
-        teams.add(new Team("사우샘프턴", 70));
-        teams.add(new Team("레스터 시티", 72));
-        teams.add(new Team("입스위치 타운", 68));
+        teams.add(new Team("선덜랜드", 70));
+        teams.add(new Team("리즈 유나이티드", 72));
+        teams.add(new Team("번리", 68));
     }
-
-    public void selectUserTeam(String name) {
-        userTeam = teams.stream()
-                .filter(t -> t.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElse(null);
+    
+    
+    //[수정] 번호로 팀선택하기 위해 인덱스 기반 메소드 추가
+    public void selectUserTeamByIndex(int index) {
+        if (index >= 0 && index < teams.size()) {
+        	userTeam = teams.get(index);
+        } else {
+        	userTeam = null;
+        }
     }
 
     public Team getUserTeam() { return userTeam; }
 
+ // [최종] 왼쪽 열 길이를 계산해서 스페이스바로 채우는 방식 (탭 X)
     public void printTeamList() {
-        for (Team t : teams) System.out.println("- " + t.getName());
+        System.out.println("--------------------------------------------------------------------------");
+        
+        // 왼쪽 열이 차지할 고정 너비 (40칸)
+        int fixedWidth = 40; 
+
+        // 2개씩 건너뛰면서 반복 (i는 0, 2, 4, ...)
+        for (int i = 0; i < teams.size(); i += 2) {
+            
+            // 1. 왼쪽 팀 정보 가져오기
+            Team leftTeam = teams.get(i);
+            String leftStr = (i + 1) + ". " + leftTeam.getName();
+            
+            // 2. 왼쪽 팀 출력
+            System.out.print(leftStr);
+            
+            // 3. [핵심] 40칸이 될 때까지 스페이스바 채우기
+            int len = getVisualLength(leftStr);
+            int padding = fixedWidth - len;
+            
+            // 길이가 부족한 만큼 공백 반복 출력
+            for (int k = 0; k < padding; k++) {
+                System.out.print(" ");
+            }
+
+            // 4. 오른쪽 팀이 있으면 출력 (i+1 번째 팀)
+            if (i + 1 < teams.size()) {
+                Team rightTeam = teams.get(i + 1);
+                String rightStr = (i + 2) + ". " + rightTeam.getName();
+                System.out.println(rightStr);
+            } else {
+                System.out.println(); // 오른쪽 팀 없으면 줄바꿈만
+            }
+        }
+        
+        System.out.println("--------------------------------------------------------------------------");
+    }
+
+    // 한글은 2칸, 그 외(영어, 숫자, 공백)는 1칸으로 계산하는 계산기
+    private int getVisualLength(String s) {
+        int length = 0;
+        for (char c : s.toCharArray()) {
+            if (c >= '가' && c <= '힣') {
+                length += 2; // 한글
+            } else {
+                length += 1; // 영어, 숫자, 특수문자
+            }
+        }
+        return length;
     }
 
     public void initializeSeason() {

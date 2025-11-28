@@ -1,7 +1,6 @@
 package premierleague.league;
 
 import premierleague.team.Team;
-
 import java.util.*;
 
 /**
@@ -36,11 +35,18 @@ public class Standings {
      */
     public void print() {
         System.out.println("\n=== 25-26 프리미어리그 순위표 ===");
-        System.out.println("순위 | 팀                    |  승점 |  득점  |  실점 |  득실차");
+        System.out.println("순위 | 팀                    |  승점 |  승 |  무 |  패 |  득점 |  실점 |  득실차");
         int pos = 1;
         for (Team t : table) {
-            System.out.printf("%3d | %-20s | %4d | %4d | %4d | %+5d\n",
-                    pos++, t.getName(), t.getPoints(), t.getGoalsFor(), t.getGoalsAgainst(),
+            System.out.printf("%3d | %-20s | %4d | %3d | %3d | %3d | %4d | %4d | %+5d\n",
+                    pos++,
+                    t.getName(), 
+                    t.getPoints(),
+                    t.getWins(), //승
+                    t.getDraws(), //무
+                    t.getLosses(), //패
+                    t.getGoalsFor(), 
+                    t.getGoalsAgainst(),
                     t.getGoalDifference());
         }
     }

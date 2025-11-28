@@ -7,7 +7,7 @@ import premierleague.team.Player;
  */
 public class Event {
     public enum EventType {
-        GOAL, SAVE, FOUL, YELLOW_CARD, RED_CARD, SHOT, NONE
+        GOAL, SAVE, FOUL, YELLOW_CARD,  SHOT, NONE
     }
 
     private EventType type;
@@ -33,9 +33,7 @@ public class Event {
             return minute + "' ⚠ " + player.getName() + "의 파울!";
         } else if (type == EventType.YELLOW_CARD) {
             return minute + "' 🟨 " + player.getName() + "에게 옐로 카드!";
-        } else if (type == EventType.RED_CARD) {
-            return minute + "' 🟥 " + player.getName() + "에게 레드 카드!";
-        } else if (type == EventType.SHOT) {
+        }else if (type == EventType.SHOT) {
             return minute + "' 🔥 " + player.getName() + "의 슈팅!";
         }
         return minute + "' (이벤트 없음)";
@@ -59,11 +57,11 @@ public class Event {
         int minute = premierleague.util.RandomEngine.getInt(1, 90);
         int roll = premierleague.util.RandomEngine.getInt(1, 100);
 
-        if (roll <= 10) return new Event(EventType.SAVE, p, minute);
-        if (roll <= 30) return new Event(EventType.SHOT, p, minute);
-        if (roll <= 45) return new Event(EventType.FOUL, p, minute);
-        if (roll <= 55) return new Event(EventType.YELLOW_CARD, p, minute);
-        if (roll <= 58) return new Event(EventType.RED_CARD, p, minute);
+        if (roll <= 15) return new Event(EventType.SAVE, p, minute);
+        if (roll <= 40) return new Event(EventType.SHOT, p, minute);
+        if (roll <= 60) return new Event(EventType.FOUL, p, minute);
+        if (roll <= 70) return new Event(EventType.YELLOW_CARD, p, minute);
+        //레드카드 로직 삭제
         return new Event(EventType.NONE, p, minute);
     }
 }
