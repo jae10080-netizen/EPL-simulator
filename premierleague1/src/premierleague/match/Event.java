@@ -34,7 +34,7 @@ public class Event {
         } else if (type == EventType.YELLOW_CARD) {
             return minute + "' 🟨 " + player.getName() + "에게 옐로 카드!";
         }else if (type == EventType.SHOT) {
-            return minute + "' 🔥 " + player.getName() + "의 슈팅!";
+            return minute + "' 🔥 " + player.getName() + "의 슈팅! 아쉽게 빗나갑니다!!";
         }
         return minute + "' (이벤트 없음)";
     }
