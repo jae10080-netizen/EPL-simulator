@@ -95,7 +95,7 @@ public class MatchEngine {
         Team home = match.getHomeTeam();
         Team away = match.getAwayTeam();
         
-        //[수정] 찬수 횟수 하향 위와 동일
+        //[수정] 찬스 횟수 하향 위와 동일
         int attemptsHome = RandomEngine.getInt(2, 6);
         int attemptsAway = RandomEngine.getInt(2, 6);
 

@@ -27,7 +27,7 @@ public class League {
         // 팀을 생성함. 여기서 팀 뒤 숫자는 가중치(weight)
         teams.add(new Team("아스널", 88));
         teams.add(new Team("맨체스터 시티", 92));
-        teams.add(new Team("리버풀", 86));
+        teams.add(new Team("리버풀", 89));
         teams.add(new Team("첼시", 80));
         teams.add(new Team("맨체스터 유나이티드", 82));
         teams.add(new Team("토트넘 홋스퍼", 84));

@@ -36,7 +36,7 @@ public class ProbabilityCalculator {
 
         double prob = adjustedAttack / denom;
 
-        // 안정화: 확률이 극단적으로 치우치지 않도록 clamp
+        // 안정화: 확률이 극단적으로 치우치지 않도록 막는다
         if (prob < 0.05) prob = 0.05;
         if (prob > 0.95) prob = 0.95;
 
