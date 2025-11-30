@@ -3,6 +3,7 @@ package premierleague.team;
 import premierleague.util.RandomEngine;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 팀 클래스
@@ -559,5 +560,63 @@ public class Team {
      */
     public Player getRandomPlayer() {
         return players.get(RandomEngine.getInt(0, players.size() - 1));
+    }
+    
+ // ---------------------------------------------------------
+    // ★ [추가] 포지션별 선수 뽑기 메소드들 (이벤트용)
+    // ---------------------------------------------------------
+
+    // 1. 골키퍼 뽑기 (선방 이벤트)
+    // 팀에 등록된 GK를 찾아서 반환합니다.
+    public Player getGoalkeeper() {
+        for (Player p : players) {
+            if (p.getPosition() == Position.GK) return p;
+        }
+        // 혹시 GK가 없으면 아무나 반환 (오류 방지)
+        return getRandomPlayer(); 
+    }
+
+    // 2. 수비수 뽑기 (태클 이벤트)
+    // DF 포지션 선수들 중에서 한 명을 랜덤으로 뽑습니다.
+    public Player getRandomDefender() {
+        return getPlayerByPosition(Position.DF);
+    }
+
+    // 3. 미드필더 뽑기 (패스 이벤트)
+    // MF 포지션 선수들 중에서 한 명을 랜덤으로 뽑습니다.
+    public Player getRandomMidfielder() {
+        return getPlayerByPosition(Position.MF);
+    }
+
+    // 4. 공격수 뽑기 (슈팅 이벤트)
+    // FW 포지션 선수들 중에서 한 명을 랜덤으로 뽑습니다.
+    public Player getRandomForward() {
+        return getPlayerByPosition(Position.FW);
+    }
+    
+ // ★ [수정] 슈팅할 선수 뽑기 (공격수 + 미드필더 포함)
+    public Player getRandomShooter() {
+        List<Player> candidates = players.stream()
+                // FW 또는 MF 포지션인 선수만 모음
+                .filter(p -> p.getPosition() == Position.FW || p.getPosition() == Position.MF)
+                .collect(Collectors.toList());
+        
+        // [수정] 예외 처리 삭제! (무조건 FW나 MF가 있으므로 바로 리턴)
+        return candidates.get(RandomEngine.getInt(0, candidates.size() - 1));
+    }
+
+    // [내부 도구] 특정 포지션에서 랜덤으로 한 명 뽑는 메소드
+    private Player getPlayerByPosition(Position pos) {
+        // 해당 포지션 선수들만 모으기
+        List<Player> candidates = players.stream()
+                .filter(p -> p.getPosition() == pos)
+                .collect(Collectors.toList());
+        
+        // 그 중에서 한 명 랜덤 뽑기
+        if (!candidates.isEmpty()) {
+            return candidates.get(RandomEngine.getInt(0, candidates.size() - 1));
+        }
+        // 해당 포지션 선수가 없으면 전체에서 아무나 뽑기
+        return getRandomPlayer(); 
     }
 }
