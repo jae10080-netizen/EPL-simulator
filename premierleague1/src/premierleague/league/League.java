@@ -63,8 +63,9 @@ public class League {
     public void printTeamList() {
         System.out.println("--------------------------------------------------------------------------");
         
-        // 왼쪽 열이 차지할 고정 너비 (40칸)
-        int fixedWidth = 40; 
+        // 왼쪽 열이 차지할 고정 너비 (35칸)
+        // (가장 긴 팀 이름인 '울버햄프턴 원더러스'도 충분히 들어갈 크기입니다)
+        int fixedWidth = 35; 
 
         // 2개씩 건너뛰면서 반복 (i는 0, 2, 4, ...)
         for (int i = 0; i < teams.size(); i += 2) {
@@ -76,7 +77,8 @@ public class League {
             // 2. 왼쪽 팀 출력
             System.out.print(leftStr);
             
-            // 3. [핵심] 40칸이 될 때까지 스페이스바 채우기
+            // 3. [핵심] 35칸이 될 때까지 스페이스바 채우기
+            // 현재 글자의 '화면상 길이'를 계산합니다.
             int len = getVisualLength(leftStr);
             int padding = fixedWidth - len;
             
