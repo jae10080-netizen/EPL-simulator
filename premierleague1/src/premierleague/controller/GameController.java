@@ -78,7 +78,7 @@ public class GameController {
             // 자동 진행 중이라면 스킵
             if (round < targetRound) {
                 System.out.println(">> " + targetRound + " ROUND까지 자동 진행 중... (현재 " + round+" ROUND" + " 완료)");
-                try { Thread.sleep(800); } catch (InterruptedException e) {}
+                try { Thread.sleep(10); } catch (InterruptedException e) {}
                 continue;
             }
             

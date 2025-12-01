@@ -1,14 +1,11 @@
 package premierleague.match;
 
 import premierleague.team.Player;
-import premierleague.team.Team; // Team 클래스 import 필요
+import premierleague.team.Team;
 import premierleague.util.RandomEngine;
 
-/**
- * 경기 이벤트 클래스 및 타입 정의
- */
 public class Event {
-    // [수정] TACKLE 추가
+    // EventType에 NONE은 이제 안 씁니다.
     public enum EventType {
         GOAL, SAVE, TACKLE, PASS, FOUL, YELLOW_CARD, SHOT, NONE
     }
@@ -23,85 +20,74 @@ public class Event {
         this.minute = minute;
     }
 
+    // 시간 설정 메소드 (MatchEngine에서 사용)
+    public void setMinute(int minute) {
+        this.minute = minute;
+    }
+
     public EventType getType() { return type; }
     public Player getPlayer() { return player; }
     public int getMinute() { return minute; }
 
     public String getDescription() {
-        // 팀 이름 가져오기 (Null 방지)
         String teamName = (player != null && player.getTeam() != null) ? player.getTeam().getName() : "Unknown";
 
         switch (type) {
             case GOAL:
                 return minute + "' ⚽ [" + teamName + "] " + player.getName() + "의 환상적인 득점!";
-
             case SAVE:
                 return minute + "' 🧤 [" + teamName + "] " + player.getName() + "의 슈퍼세이브!";
-
-            case TACKLE: // [추가] 수비수 이벤트
-                return minute + "' 🛡️ [" + teamName + "] " + player.getName() + "의 깔끔한 태클!";
-
-            case PASS: // [수정] 멘트 수정 (슈팅 -> 패스)
+            case TACKLE:
+                return minute + "' 🛡️ [" + teamName + "] " + player.getName() + "의 결정적인 태클 성공!";
+            case PASS:
                 return minute + "' 👟 [" + teamName + "] " + player.getName() + "의 날카로운 킬패스!";
-
             case FOUL:
                 return minute + "' ⚠ [" + teamName + "] " + player.getName() + "의 파울!";
-
             case YELLOW_CARD:
                 return minute + "' 🟨 [" + teamName + "] " + player.getName() + "에게 옐로 카드!";
-
             case SHOT:
                 return minute + "' 🔥 [" + teamName + "] " + player.getName() + "의 강력한 슈팅! 아쉽게 빗나갑니다.";
-            
             default:
-                return minute + "' (경기 진행 중...)";
+                return ""; // 빈 문자열 반환 (혹시라도 NONE이면 출력 안 함)
         }
     }
 
-    /**
-     * 득점 이벤트 생성 헬퍼
-     */
     public static Event createGoalEvent(Team team) {
-        // 득점자는 공격수 위주로 뽑기
         Player scorer = team.getRandomScorer();
         int minute = RandomEngine.getInt(1, 90);
         return new Event(EventType.GOAL, scorer, minute);
     }
 
-    /**
-     * [핵심 수정] 이벤트 종류에 따라 '맞는 포지션'의 선수를 데려옵니다.
-     */
+    // [수정] 확률을 100%로 꽉 채워서 '경기 진행 중'이 안 나오게 함
     public static Event createMinorEvent(Team team) {
         int minute = RandomEngine.getInt(1, 90);
         int roll = RandomEngine.getInt(1, 100);
 
-        // 확률 분포 (합이 100이 안 되면 나머지는 NONE)
-        // 1. 선방 (15%) -> 무조건 골키퍼
+        // 1. 선방 (15%)
         if (roll <= 15) {
             return new Event(EventType.SAVE, team.getGoalkeeper(), minute);
         }
-        // 2. 태클 (15%) -> 수비수 위주
-        else if (roll <= 30) {
+        // 2. 태클 (20%) -> 수비수 활약 증가
+        else if (roll <= 35) {
             return new Event(EventType.TACKLE, team.getRandomDefender(), minute);
         }
-        // 3. 패스 (20%) -> 미드필더 위주
-        else if (roll <= 50) {
+        // 3. 패스 (25%) -> 미드필더 활약 증가
+        else if (roll <= 60) {
             return new Event(EventType.PASS, team.getRandomMidfielder(), minute);
         }
-        // 4. 슈팅 (15%) -> 공격수 위주
-        else if (roll <= 65) {
-            return new Event(EventType.SHOT, team.getRandomShooter(), minute);
+        // 4. 슈팅 (25%) -> 공격수 슈팅 빈도 증가
+        else if (roll <= 85) {
+            return new Event(EventType.SHOT, team.getRandomShooter(), minute); // Shooter(FW+MF) 사용
         }
-        // 5. 파울 (10%) -> 아무나
-        else if (roll <= 75) {
+        // 5. 파울 (10%)
+        else if (roll <= 95) {
             return new Event(EventType.FOUL, team.getRandomPlayer(), minute);
         }
-        // 6. 경고 (5%) -> 아무나
-        else if (roll <= 80) {
+        // 6. 경고 (5%) -> 나머지 전부 옐로카드 (빈틈 없음)
+        else {
             return new Event(EventType.YELLOW_CARD, team.getRandomPlayer(), minute);
         }
-
-        // 나머지는 이벤트 없음
-        return new Event(EventType.NONE, team.getRandomPlayer(), minute);
     }
 }
+    
+ 

@@ -2,44 +2,29 @@ package premierleague.util;
 
 import premierleague.team.Team;
 
-/**
- * 득점 확률 계산기
- * - team: 공격팀의 전력(0~100)
- * - opponent: 수비팀의 전력(0~100)
- *
- * 반환값: 0.0 ~ 1.0 (골이 발생할 확률)
- *
- * 기본 아이디어:
- * adjustedAttack = team.weight * randomFactor(0.7~1.3)
- * adjustedDefense = opponent.weight * randomFactor(0.85~1.15)
- * probability = adjustedAttack / (adjustedAttack + adjustedDefense)
- *
- * 이렇게 하면 팀 전력 차이가 확률로 자연스럽게 반영됨.
- */
 public class ProbabilityCalculator {
 
-    public static double goalProbability(Team team, Team opponent) {
+    // [수정] 상대 수비력을 고려한 현실적인 골 확률 계산기
+    public static double goalProbability(Team attacker, Team defender) {
 
-        double attack = team.getWeight();
-        double defense = opponent.getWeight();
+        double attackStat = attacker.getWeight(); // 공격팀 전력 (예: 맨시티 95)
+        double defenseStat = defender.getWeight(); // 수비팀 전력 (예: 선덜랜드 70)
 
-        // 랜덤 보정 (0.7 ~ 1.3)
-        double attackFactor = 0.7 + RandomEngine.getDouble() * 0.6;
-        double defenseFactor = 0.85 + RandomEngine.getDouble() * 0.3;
+        // ★ 밸런스 핵심 공식 ★
+        // 내 공격력에서 상대 수비력의 40%만큼을 깎습니다.
+        // 예: 맨시티(95) vs 선덜랜드(70)
+        // -> 95 - (70 * 0.4) = 67점 (공격 성공률 높음)
+        // 예: 선덜랜드(70) vs 맨시티(95)
+        // -> 70 - (95 * 0.4) = 32점 (공격 성공률 폭망)
+        double effectivePower = attackStat - (defenseStat * 0.4);
 
-        double adjustedAttack = attack * attackFactor;
-        double adjustedDefense = defense * defenseFactor;
+        // 기준점 110으로 나누어 확률(0.0 ~ 1.0) 도출
+        double probability = effectivePower / 160.0;
 
-        // 0으로 나누는 것을 방지
-        double denom = adjustedAttack + adjustedDefense;
-        if (denom <= 0.0001) return 0.5;
+        // 최소 확률(5%)과 최대 확률(95%) 보정
+        if (probability < 0.05) probability = 0.05;
+        if (probability > 0.95) probability = 0.95;
 
-        double prob = adjustedAttack / denom;
-
-        // 안정화: 확률이 극단적으로 치우치지 않도록 막는다
-        if (prob < 0.05) prob = 0.05;
-        if (prob > 0.95) prob = 0.95;
-
-        return prob;
+        return probability;
     }
 }
