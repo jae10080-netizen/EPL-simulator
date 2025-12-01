@@ -161,6 +161,6 @@ public class MatchEngine {
     }
 
     private void sleep(int ms) {
-        try { Thread.sleep(ms/100); } catch (InterruptedException e) {}
+        try { Thread.sleep(ms); } catch (InterruptedException e) {} // ms / 10 or 100으로 속도 조정해서 시뮬레이션 하는 코드 
     }
 }
