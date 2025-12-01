@@ -49,9 +49,9 @@ public class Team {
 */ //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     private void generateDefaultPlayers() {
 
-        // ============================
-        // 1) Arsenal (아스널)
-        // ============================
+        
+        // 1) 아스널
+        
         if (name.equals("아스널")) {
             players.add(new Player("빅토르 요케레스", Position.FW, this));
             players.add(new Player("부카요 사카", Position.FW, this));
@@ -70,12 +70,12 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 2) Man City (맨체스터 시티)
-        // ============================
+        
+        // 2) 맨체스터 시티
+        
         if (name.equals("맨체스터 시티")) {
             players.add(new Player("엘링 홀란드", Position.FW, this));
-            players.add(new Player("제레미 도투", Position.FW, this));
+            players.add(new Player("제레미 도쿠", Position.FW, this));
             players.add(new Player("필 포든", Position.FW, this));
 
             
@@ -92,9 +92,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 3) Liverpool (리버풀)
-        // ============================
+        
+        // 3) 리버풀
+        
         if (name.equals("리버풀")) {
             players.add(new Player("모하메드 살라", Position.FW,  this));
             players.add(new Player("코디 각포", Position.FW,  this));
@@ -114,9 +114,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 4) Chelsea (첼시)
-        // ============================
+        
+        // 4) 첼시
+        
         if (name.equals("첼시")) {
             players.add(new Player("페드로 네투", Position.FW, this));
             players.add(new Player("후앙 페드로", Position.FW,  this));
@@ -135,9 +135,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 5) Man United (맨체스터 유나이티드)
-        // ============================
+        
+        // 5) 맨체스터 유나이티드
+        
         if (name.equals("맨체스터 유나이티드")) {
             players.add(new Player("아마드 디알로", Position.FW, this));
             players.add(new Player("마테우스 쿠냐", Position.FW, this));
@@ -157,9 +157,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 6) Tottenham (토트넘 홋스퍼)
-        // ============================
+        
+        // 6) 토트넘 홋스퍼
+        
         if (name.equals("토트넘 홋스퍼")) {
             players.add(new Player("쿠드스", Position.FW, this));
             players.add(new Player("히샬리송", Position.FW, this));
@@ -179,9 +179,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 7) Newcastle (뉴캐슬 유나이티드)
-        // ============================
+        
+        // 7) 뉴캐슬 유나이티드
+        
         if (name.equals("뉴캐슬 유나이티드")) {
             players.add(new Player("닉 볼테마트", Position.FW, this));
             players.add(new Player("하비 반스", Position.FW, this));
@@ -201,9 +201,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 8) Brighton (브라이튼 & 호브 알비온)
-        // ============================
+        
+        // 8) 브라이튼 & 호브 알비온
+        
         if (name.equals("브라이튼 앤 호브 알비온")) {
             players.add(new Player("얀쿠바 민테", Position.FW, this));
             players.add(new Player("대니 웰백", Position.FW, this));
@@ -223,9 +223,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 9) Aston Villa (아스톤 빌라)
-        // ============================
+        
+        // 9) 아스톤 빌라
+        
         if (name.equals("애스턴 빌라")) {
             players.add(new Player("올리 왓킨스", Position.FW, this));
             players.add(new Player("에반 게상", Position.FW, this));
@@ -245,9 +245,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 10) West Ham (웨스트 햄 유나이티드)
-        // ============================
+        
+        // 10) 웨스트 햄 유나이티드
+        
         if (name.equals("웨스트햄 유나이티드")) {
             players.add(new Player("재러드 보웬", Position.FW, this));
             players.add(new Player("크리센시오", Position.FW, this));
@@ -267,9 +267,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 11) Brentford (브렌트퍼드)
-        // ============================
+        
+        // 11) 브렌트포드
+        
         if (name.equals("브렌트포드")) {
             players.add(new Player("아이반 토니", Position.FW, this));
             players.add(new Player("당고 우아타라", Position.FW, this));
@@ -289,9 +289,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 12) Fulham (풀럼)
-        // ============================
+        
+        // 12) 풀럼
+        
         if (name.equals("풀럼")) {
             players.add(new Player("라울 히메네스", Position.FW, this));
             players.add(new Player("케빈", Position.FW, this));
@@ -310,9 +310,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 13) Wolves (울버햄튼 원더러스)
-        // ============================
+        
+        // 13) 울버햄튼 원더러스
+        
         if (name.equals("울버햄프턴 원더러스")) {
             players.add(new Player("존 아리아스", Position.FW, this));
             players.add(new Player("잭슨 차추아", Position.FW, this));
@@ -332,9 +332,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 14) Crystal Palace (크리스탈 팰리스)
-        // ============================
+        
+        // 14) 크리스탈 팰리스
+        
         if (name.equals("크리스탈 팰리스")) {
             players.add(new Player("이스마엘라 사르", Position.FW, this));
             players.add(new Player("장-필립 마테타", Position.FW, this));
@@ -354,9 +354,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 15) Everton (에버턴)
-        // ============================
+        
+        // 15) 에버턴
+        
         if (name.equals("에버턴")) {
             players.add(new Player("일리만 은디아예", Position.FW, this));
             players.add(new Player("베투", Position.FW, this));
@@ -376,9 +376,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 16) Bournemouth (AFC 본머스)
-        // ============================
+        
+        // 16) AFC 본머스
+        
         if (name.equals("본머스")) {
             players.add(new Player("데이빗 브룩스", Position.FW, this));
             players.add(new Player("앙투안 세메뇨", Position.FW, this));
@@ -398,9 +398,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 17) Nottingham Forest (노팅엄 포레스트)
-        // ============================
+        
+        // 17) 노팅엄 포레스트
+        
         if (name.equals("노팅엄 포레스트")) {
             players.add(new Player("크리스 우드", Position.FW, this));
             players.add(new Player("이고르 제주스", Position.FW, this));
@@ -419,9 +419,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 18) Southampton (사우샘프턴) - (승격팀)
-        // ============================
+        
+        // 18) 선덜랜드
+        
         if (name.equals("선덜랜드")) {
             players.add(new Player("베르트란드 트라오레", Position.FW, this));
             players.add(new Player("헴스디네 탈비", Position.FW, this));
@@ -441,9 +441,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 19) Leicester City (레스터 시티) - (승격팀)
-        // ============================
+        
+        // 19) 리즈 유나이티드
+        
         if (name.equals("리즈 유나이티드")) {
             players.add(new Player("루카스 은메차", Position.FW, this));
             players.add(new Player("노아 오카포", Position.FW, this));
@@ -463,9 +463,9 @@ public class Team {
             return;
         }
 
-        // ============================
-        // 20) Ipswich Town (입스위치 타운) - (승격팀)
-        // ============================
+        
+        // 20) 번리
+        
         if (name.equals("번리")) {
             players.add(new Player("롬 차오나", Position.FW, this));
             players.add(new Player("라일 포스터", Position.FW, this));

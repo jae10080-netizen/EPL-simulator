@@ -17,7 +17,7 @@ public class GameController {
     public void startSeason() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("=== Premier League Simulator 25-26 ===");
+        System.out.println("=== England Premier League Simulator 25-26 ===");
         
         // --- [수정]팀 선택 로직 번호입력 방식 ---
         boolean teamSelected = false;
@@ -50,7 +50,7 @@ public class GameController {
         System.out.println("\n준비가 되셨다면 [Enter] 키를 누르세요...");
         sc.nextLine(); // 사용자가 엔터를 칠 때까지 대기
 
-        System.out.println("⚽ 2025-26 프리미어리그 시즌을 시작합니다! ⚽");
+        System.out.println("⚽ 2025-26 England Premier league 시즌을 시작합니다! ⚽");
         try { Thread.sleep(1000); } catch (InterruptedException e) {} // 1초 뜸 들이기
 
 
@@ -62,12 +62,9 @@ public class GameController {
         for (int round = 1; round <= 38; round++) {
             System.out.println("\n\n===== ROUND " + round + " =====");
 
-            Match userMatch = league.getUserMatch(round);
-            if (userMatch != null) {
-                league.simulateUserMatchWithUI(userMatch);
-            } else {
-                System.out.println("이번 라운드에 사용자 팀 경기가 없습니다.");
-            }
+         
+            league.simulateUserMatchWithUI(league.getUserMatch(round));
+
 
             league.simulateOtherMatches(round);
             league.updateStandings();
@@ -80,7 +77,7 @@ public class GameController {
 
             // 자동 진행 중이라면 스킵
             if (round < targetRound) {
-                System.out.println(">> " + targetRound + "라운드까지 고속 진행 중... (현재 " + round + " 완료)");
+                System.out.println(">> " + targetRound + " ROUND까지 자동 진행 중... (현재 " + round+" ROUND" + " 완료)");
                 try { Thread.sleep(800); } catch (InterruptedException e) {}
                 continue;
             }

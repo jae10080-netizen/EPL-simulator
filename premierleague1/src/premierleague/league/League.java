@@ -166,11 +166,11 @@ public class League {
         });
         Team champion = teams.get(0);
 
-        System.out.println("\n🏆 🏆 🏆 PREMIER LEAGUE CHAMPIONS 🏆 🏆 🏆");
+        System.out.println("\n🏆 🏆 🏆 2025-26 ENGLAND PREMIER LEAGUE CHAMPIONS 🏆 🏆 🏆");
         System.out.println("        >>>  " + champion.getName().toUpperCase() + "  <<<");
         System.out.println("============================================");
 
-        // 3. 득점왕(Golden Boot) 찾기
+     // 3. 득점왕(Golden Boot) 찾기
         List<Player> allPlayers = new ArrayList<>();
         for (Team t : teams) {
             allPlayers.addAll(t.getPlayers());
@@ -179,20 +179,55 @@ public class League {
         // 골 순으로 내림차순 정렬
         allPlayers.sort((p1, p2) -> p2.getGoals() - p1.getGoals());
         
-        Player topScorer = allPlayers.get(0);
-        
-        System.out.println("\n👟 GOLDEN BOOT WINNER (득점왕)");
-        System.out.println("PLAYER: " + topScorer.getName() + " (" + topScorer.getTeam().getName() + ")");
-        System.out.println("GOALS : " + topScorer.getGoals());
-        
-        // (선택사항) 공동 득점자가 있을 경우 체크
-        for(int i=1; i<allPlayers.size(); i++) {
-            if(allPlayers.get(i).getGoals() == topScorer.getGoals()) {
-                System.out.println("        " + allPlayers.get(i).getName() + " (" + allPlayers.get(i).getTeam().getName() + ")");
-            } else {
-                break;
+        System.out.println("\n👟 2025-26 GOLDEN BOOT WINNER (득점왕)");
+
+        if (!allPlayers.isEmpty()) {
+            int maxGoals = allPlayers.get(0).getGoals(); // 1등의 골 수 저장
+            
+            // 리스트 전체를 돌면서 1등과 골 수가 같은 사람을 모두 출력
+            for (Player p : allPlayers) {
+                if (p.getGoals() == maxGoals) {
+                    System.out.println("PLAYER: " + p.getName() + " (" + p.getTeam().getName() + ")");
+                    System.out.println("GOALS : " + p.getGoals());
+                    System.out.println("--------------------------------");
+                } else {
+                    break; // 골 수가 줄어들면 반복문 종료
+                }
             }
         }
         System.out.println("############################################");
+        
+     // ... (기존 리그 득점왕 출력 코드 아래에 추가) ...
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("      🎯 내 팀 순위 (" + userTeam.getName() + ") 🎯");
+        System.out.println("--------------------------------------------");
+
+        // 1. 내 팀 순위 찾기
+        // (위에서 이미 teams 리스트가 성적순으로 정렬되어 있으므로, 인덱스만 찾으면 됨)
+        int myRank = teams.indexOf(userTeam) + 1; 
+        System.out.println("내 팀 순위 : " + myRank + "위");
+
+        // 2. 내 팀 내 최다 득점자 찾기
+        List<Player> mySquad = new ArrayList<>(userTeam.getPlayers());
+        // 골 많이 넣은 순서로 정렬
+        mySquad.sort((p1, p2) -> p2.getGoals() - p1.getGoals());
+
+        if (!mySquad.isEmpty()) {
+            Player myAce = mySquad.get(0);
+            System.out.println("팀 내 득점왕 : " + myAce.getName() + " (" + myAce.getGoals() + "골)");
+            
+            // (선택사항) 공동 득점자가 있다면 같이 출력
+            for (int i = 1; i < mySquad.size(); i++) {
+                if (mySquad.get(i).getGoals() == myAce.getGoals()) {
+                    System.out.println("              " + mySquad.get(i).getName() + " (" + mySquad.get(i).getGoals() + "골)");
+                } else {
+                    break;
+                }
+            }
+        }
+        
+        // 기존의 마지막 줄
+        System.out.println("############################################");
     }
-}
+    }
