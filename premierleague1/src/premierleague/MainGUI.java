@@ -167,14 +167,16 @@ public class MainGUI extends JFrame {
      */
     private void handleAutoRun() {
         int currentRound = controller.getCurrentRound();
+        
+        int lastFinishedRound = currentRound - 1;
 
-        if (currentRound > 38) {
+        if (lastFinishedRound > 38) {
             JOptionPane.showMessageDialog(this, "이미 시즌이 종료되었습니다.", "시즌 종료", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         
         String targetStr = JOptionPane.showInputDialog(this, 
-            "몇 라운드까지 진행하시겠습니까? (현재: " + currentRound + " / 최대: 38)", 
+            "몇 라운드까지 진행하시겠습니까? (현재: " + lastFinishedRound + " / 최대: 38)", 
             "자동 진행 설정", 
             JOptionPane.QUESTION_MESSAGE
         );
@@ -184,7 +186,7 @@ public class MainGUI extends JFrame {
         try {
             int targetRound = Integer.parseInt(targetStr);
 
-            if (targetRound <= currentRound || targetRound > 38) {
+            if (targetRound <= lastFinishedRound || targetRound > 38) {
                 JOptionPane.showMessageDialog(this, "잘못된 범위입니다. 현재 라운드보다 크고 38 이하인 숫자를 입력하세요.", "입력 오류", JOptionPane.ERROR_MESSAGE);
                 return;
             }
