@@ -16,6 +16,7 @@ public class League {
     private List<List<Match>> schedule;
     private Team userTeam;
     private Standings standings;
+    private int currentRound = 1; // 1라운드부터 시작
 
     public League() {
         this.teams = new ArrayList<>();
@@ -102,6 +103,24 @@ public class League {
         
         System.out.println("--------------------------------------------------------------------------");
     }
+    
+    public int getCurrentRound() {
+        return currentRound;
+    }
+
+    public void incrementRound() {
+        this.currentRound++;
+    }
+    // ==========================================================
+    
+    public void initializeSeason() {
+        ScheduleGenerator generator = new ScheduleGenerator();
+        schedule = generator.generate(teams);
+        for (Team t : teams) t.resetStats();
+        
+        // 🚨 중요: initializeSeason()이 호출될 때 라운드 카운터를 1로 초기화합니다.
+        this.currentRound = 1;
+    }
 
     // 한글은 2칸, 그 외(영어, 숫자, 공백)는 1칸으로 계산하는 계산기
     private int getVisualLength(String s) {
@@ -116,11 +135,7 @@ public class League {
         return length;
     }
 
-    public void initializeSeason() {
-        ScheduleGenerator generator = new ScheduleGenerator();
-        schedule = generator.generate(teams);
-        for (Team t : teams) t.resetStats();
-    }
+    
 
     public Match getUserMatch(int round) {
         if (schedule == null || round < 1 || round > schedule.size()) return null;
@@ -230,7 +245,58 @@ public class League {
             }
         }
         
+        
         // 기존의 마지막 줄
         System.out.println("############################################");
+        
+        
+        
     }
+    
+ // [League.java 파일에 추가]
+
+ // MainGUI가 팀 선택 시 목록을 표시할 수 있도록 문자열을 반환합니다.
+ public String getFormattedTeamList() {
+     // 출력(System.out.println) 대신 문자열을 쌓는 객체
+     StringBuilder sb = new StringBuilder();
+     
+     // (이전에 구현했던 printTeamList() 로직을 그대로 사용합니다.)
+     
+     int fixedWidth = 35; 
+
+     // 2개씩 건너뛰면서 반복 (i는 0, 2, 4, ...)
+     for (int i = 0; i < teams.size(); i += 2) {
+         
+         // 1. 왼쪽 팀 정보 가져오기
+         Team leftTeam = teams.get(i);
+         String leftStr = (i + 1) + ". " + leftTeam.getName();
+         
+         // 2. 왼쪽 팀 정보를 문자열에 추가
+         sb.append(leftStr);
+         
+         // 3. [핵심] 35칸이 될 때까지 스페이스바 채우기
+         int len = getVisualLength(leftStr);
+         int padding = fixedWidth - len;
+         
+         for (int k = 0; k < padding; k++) {
+             sb.append(" ");
+         }
+
+         // 4. 오른쪽 팀이 있으면 추가 (i+1 번째 팀)
+         if (i + 1 < teams.size()) {
+             Team rightTeam = teams.get(i + 1);
+             String rightStr = (i + 2) + ". " + rightTeam.getName();
+             sb.append(rightStr).append("\n"); // 줄바꿈
+         } else {
+             sb.append("\n"); // 오른쪽 팀 없으면 줄바꿈만
+         }
+     }
+     
+     // 완성된 문자열을 GameController로 반환
+     return sb.toString();
+ }
+
+ // ⚠️ 참고: League.java에 이 메소드가 있는지 확인하세요!
+ // private int getVisualLength(String s) { ... }
+ // 이 메소드가 없다면 이전에 구현했던 getVisualLength(한글 길이 계산)도 함께 추가해야 합니다.
     }
