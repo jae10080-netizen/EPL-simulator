@@ -144,21 +144,19 @@ public class MainGUI extends JFrame {
      * 다음 라운드를 한 번 진행하고 시즌 종료 여부를 확인합니다.
      */
     private void playRoundLogic() {
+        // playNextRound가 호출되어 38라운드 진행 후 currentRound는 39가 됨.
         int finishedRound = controller.playNextRound(); 
         
         // 스크롤을 항상 맨 아래로
         gameLogArea.setCaretPosition(gameLogArea.getDocument().getLength());
 
-        if (finishedRound == -1) {
+        // finishedRound가 -1이면 (GameController에서 39 감지), 즉시 종료 상태로 전환
+        if (finishedRound == -1) { 
             // 시즌 종료 처리
-            mainActionButton.setText("시즌이 종료되었습니다.");
-            mainActionButton.setActionCommand("FINISHED");
-            mainActionButton.setEnabled(false);
-            standingsButton.setEnabled(false);
-            autoRunButton.setEnabled(false);
+            updateMainButtonText(); // 39를 감지하고 "시즌 종료"로 버튼을 바꿈
         } else {
-            // 다음 라운드 진행 가능
-            updateMainButtonText();
+            // 다음 라운드 진행 가능 (1 ~ 38)
+            updateMainButtonText(); // 다음 라운드 번호(예: 39)로 버튼 텍스트 업데이트 
         }
     }
     
@@ -214,10 +212,20 @@ public class MainGUI extends JFrame {
                     standingsButton.setEnabled(true);
                     autoRunButton.setEnabled(true);
                     
-                    // 마지막 라운드가 끝났다면 최종 결과 출력
                     if(controller.getCurrentRound() > 38) {
-                        controller.printFinalResult(); // GameController에 이 메소드가 있어야 합니다.
-                        playRoundLogic(); // 최종 종료 상태로 전환
+                        // 38라운드가 끝났다면 최종 결과 출력 및 GUI를 종료 상태로 전환
+                        controller.printFinalResult(); 
+                        mainActionButton.setText("시즌이 종료되었습니다.");
+                        mainActionButton.setActionCommand("FINISHED");
+                        mainActionButton.setEnabled(false);
+                        standingsButton.setEnabled(false);
+                        autoRunButton.setEnabled(false);
+                    } else {
+                        // 38라운드 이전에 멈췄다면 다음 라운드 번호로 버튼 텍스트 업데이트
+                        updateMainButtonText(); 
+                        mainActionButton.setEnabled(true);
+                        standingsButton.setEnabled(true);
+                        autoRunButton.setEnabled(true);
                     }
                 });
             }).start();
@@ -227,12 +235,24 @@ public class MainGUI extends JFrame {
         }
     }
 
-    /**
-     * 메인 버튼의 텍스트를 현재 라운드에 맞게 업데이트합니다.
-     */
     private void updateMainButtonText() {
-        int nextRound = controller.getCurrentRound();
-        mainActionButton.setText("다음 라운드 진행 (Round " + nextRound + ")");
+        int nextRound = controller.getCurrentRound(); // 이 시점에 이미 다음 라운드 번호(예: 39)가 들어있음
+
+        if (nextRound > 38) {
+            // ⭐⭐ 38라운드가 끝났으므로 버튼 비활성화 및 텍스트 변경 ⭐⭐
+            mainActionButton.setText("시즌 종료 (최종 결과 확인)");
+            mainActionButton.setActionCommand("FINISHED");
+            mainActionButton.setEnabled(false);
+            standingsButton.setEnabled(false);
+            autoRunButton.setEnabled(false);
+            
+            // 최종 결과 출력 (이 시점에 printFinalResult를 호출해도 안전합니다)
+            controller.printFinalResult(); 
+            
+        } else {
+            // 38라운드 이하일 때만 다음 라운드 번호를 표시
+            mainActionButton.setText("다음 라운드 진행 (Round " + nextRound + ")");
+        }
     }
 
 

@@ -135,7 +135,7 @@ public class GameController {
             int round = league.getCurrentRound(); // League.java에서 현재 라운드 번호를 가져옴
 
             if (round > 38) {
-                league.printFinalResult(); // 시즌 종료 시 최종 결과 출력
+                
                 return -1; // 시즌 종료
             }
 
