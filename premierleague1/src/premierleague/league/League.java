@@ -25,67 +25,28 @@ public class League {
 
     private void loadTeams() {
         // [밸런스 패치 완료]
-        // 기준: 기본 점수 70점 + (최근 5년 성적 점수 / 4)
         // 이렇게 해야 1등(95)과 꼴등(70)의 격차가 적절해져서 현실적인 결과가 나옵니다.
-
-        // 1. 맨체스터 시티 (98점 -> 95)
-        teams.add(new Team("맨체스터 시티", 95));
+    	// 기준: 기본 점수 70점 + (최근 5년 성적 점수 / 4)
         
-        // 2. 리버풀 (91점 -> 93)
-        teams.add(new Team("리버풀", 93));
-        
-        // 3. 아스널 (86점 -> 92)
-        teams.add(new Team("아스널", 92));
-        
-        // 4. 첼시 (76점 -> 89)
-        teams.add(new Team("첼시", 89));
-        
-        // 5. 맨체스터 유나이티드 (71점 -> 88)
-        teams.add(new Team("맨체스터 유나이티드", 88));
-        
-        // 6. 뉴캐슬 유나이티드 (66점 -> 87)
-        teams.add(new Team("뉴캐슬 유나이티드", 87));
-        
-        // 7. 토트넘 홋스퍼 (64점 -> 86)
-        teams.add(new Team("토트넘 홋스퍼", 86));
-        
-        // 8. 아스톤 빌라 (63점 -> 86)
-        teams.add(new Team("애스턴 빌라", 86));
-        
-        // 9. 브라이튼 (55점 -> 84)
-        teams.add(new Team("브라이튼 앤 호브 알비온", 84));
-        
-        // 10. 웨스트햄 (55점 -> 84)
-        teams.add(new Team("웨스트햄 유나이티드", 84));
-        
-        // 11. 크리스탈 팰리스 (46점 -> 82)
-        teams.add(new Team("크리스탈 팰리스", 82));
-        
-        // 12. 울버햄튼 (39점 -> 80)
-        teams.add(new Team("울버햄프턴 원더러스", 80));
-        
-        // 13. 브렌트포드 (36점 -> 79)
-        teams.add(new Team("브렌트포드", 79));
-        
-        // 14. 에버턴 (34점 -> 79)
-        teams.add(new Team("에버턴", 79));
-        
-        // 15. 풀럼 (32점 -> 78)
-        teams.add(new Team("풀럼", 78));
-        
-        // 16. 본머스 (27점 -> 77)
-        teams.add(new Team("본머스", 77));
-        
-        // 17. 노팅엄 포레스트 (23점 -> 76)
-        teams.add(new Team("노팅엄 포레스트", 76));
-        
-        // 18. 리즈 유나이티드 (16점 -> 74)
-        teams.add(new Team("리즈 유나이티드", 74));
-        
-        // 19. 번리 (9점 -> 72)
-        teams.add(new Team("번리", 72));
-        
-        // 20. 선덜랜드 (0점 -> 70)
+        teams.add(new Team("맨체스터 시티", 95));   
+        teams.add(new Team("리버풀", 93));         
+        teams.add(new Team("아스널", 92));              
+        teams.add(new Team("첼시", 89));               
+        teams.add(new Team("맨체스터 유나이티드", 88));        
+        teams.add(new Team("뉴캐슬 유나이티드", 87));                
+        teams.add(new Team("토트넘 홋스퍼", 86));                
+        teams.add(new Team("애스턴 빌라", 86));        
+        teams.add(new Team("브라이튼 앤 호브 알비온", 84));               
+        teams.add(new Team("웨스트햄 유나이티드", 84));           
+        teams.add(new Team("크리스탈 팰리스", 82));     
+        teams.add(new Team("울버햄프턴 원더러스", 80));       
+        teams.add(new Team("브렌트포드", 79));          
+        teams.add(new Team("에버턴", 79));                
+        teams.add(new Team("풀럼", 78));               
+        teams.add(new Team("본머스", 77));                
+        teams.add(new Team("노팅엄 포레스트", 76));                
+        teams.add(new Team("리즈 유나이티드", 74));            
+        teams.add(new Team("번리", 72));        
         teams.add(new Team("선덜랜드", 70));
     }
     

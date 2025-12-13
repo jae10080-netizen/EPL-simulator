@@ -8,3 +8,4 @@ public class Main {
         controller.startSeason();
     }
 }
+

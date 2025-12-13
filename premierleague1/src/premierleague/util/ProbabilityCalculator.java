@@ -16,9 +16,10 @@ public class ProbabilityCalculator {
         // -> 95 - (70 * 0.4) = 67점 (공격 성공률 높음)
         // 예: 선덜랜드(70) vs 맨시티(95)
         // -> 70 - (95 * 0.4) = 32점 (공격 성공률 폭망)
+        // 내 가중치에서 상대 기중치의 40%만큼을 깎습니다.
         double effectivePower = attackStat - (defenseStat * 0.4);
 
-        // 기준점 110으로 나누어 확률(0.0 ~ 1.0) 도출
+        // 기준점 160으로 나누어 확률(0.0 ~ 1.0) 도출
         double probability = effectivePower / 160.0;
 
         // 최소 확률(5%)과 최대 확률(95%) 보정

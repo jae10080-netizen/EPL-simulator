@@ -21,8 +21,7 @@ public class MatchEngine {
         Team home = match.getHomeTeam();
         Team away = match.getAwayTeam();
 
-        // ★ [핵심 수정] 공격 기회 횟수를 다시 줄였습니다! (현실성 복구)
-        // 기존(과다 득점): (weight / 15) + 3  --> 약 9~10회 (너무 많음)
+        
         // 변경(현실적): (weight / 18)        --> 약 4~5회 (적절함)
         
         int attemptsHome = (int)(home.getWeight() / 18) + RandomEngine.getInt(0, 2);

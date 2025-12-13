@@ -594,7 +594,7 @@ public class Team {
         return getPlayerByPosition(Position.FW);
     }
     
- // ★ [수정] 슈팅할 선수 뽑기 (공격수 + 미드필더 포함)
+ //  슈팅할 선수 뽑기 (공격수 + 미드필더 포함)
     public Player getRandomShooter() {
         List<Player> candidates = players.stream()
                 // FW 또는 MF 포지션인 선수만 모음
